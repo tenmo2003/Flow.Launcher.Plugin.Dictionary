@@ -1,0 +1,12 @@
+{
+    "ID": "2DCC5AE74387484D8F8353AB158A4380",
+    "ActionKeyword": "fd",
+    "Name": "Dictionary",
+    "Description": "Lookup words' definition with Free Dictionary",
+    "Author": "tenmo2003",
+    "Version": "1.0.0",
+    "Language": "csharp",
+    "Website": "https://github.com/tenmo2003/Flow.Launcher.Plugin.Dictionary",
+    "IcoPath": "icon.png",
+    "ExecuteFileName": "Flow.Launcher.Plugin.Dictionary.dll"
+}
