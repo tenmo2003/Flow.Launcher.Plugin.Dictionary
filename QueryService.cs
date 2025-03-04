@@ -46,15 +46,25 @@ namespace Flow.Launcher.Plugin.Dictionary
             QueryResult mainResult = queryResult[0];
 
             string phonetic = mainResult.Phonetic;
+            string audioURL = null;
+            if (string.IsNullOrEmpty(phonetic) && mainResult.Phonetics.Length > 0)
             {
                 for (int i = 0; i < mainResult.Phonetics.Length; i++)
                 {
                     if (string.IsNullOrEmpty(phonetic) && !string.IsNullOrEmpty(mainResult.Phonetics[i].Text))
                     {
                         phonetic = mainResult.Phonetics[i].Text;
-                        break;
                     }
 
+                    if (string.IsNullOrEmpty(audioURL) && !string.IsNullOrEmpty(mainResult.Phonetics[i].Audio))
+                    {
+                        audioURL = mainResult.Phonetics[i].Audio;
+                    }
+
+                    if (!string.IsNullOrEmpty(phonetic) && !string.IsNullOrEmpty(audioURL))
+                    {
+                        break;
+                    }
                 }
             }
 
@@ -71,6 +81,23 @@ namespace Flow.Launcher.Plugin.Dictionary
                 results.Add(result);
             }
 
+            if (!string.IsNullOrEmpty(audioURL))
+            {
+                var stream = await httpClient.GetStreamAsync(audioURL);
+                using var mp3Reader = new Mp3FileReader(stream);
+                using var waveOut = new WaveOutEvent();
+                waveOut.Init(mp3Reader);
+                waveOut.Play();
+
+                if (results.Count > 0)
+                {
+                    results[0].Action = (_c) =>
+                    {
+                        waveOut.Play();
+                        return false;
+                    };
+                }
+            }
 
             foreach (var meaning in mainResult.Meanings)
             {
