@@ -69,7 +69,7 @@ namespace Flow.Launcher.Plugin.Dictionary
                 var result = new Result
                 {
                     Title = phonetic,
-                    SubTitle = "Phonetic (Select to play audio)",
+                    SubTitle = "Phonetic (Select to play audio if available)",
                     IcoPath = iconPath,
                 };
 
