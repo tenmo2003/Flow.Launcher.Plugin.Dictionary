@@ -14,8 +14,6 @@ namespace Flow.Launcher.Plugin.Dictionary
 
         private const string iconPath = "icon.png";
 
-        private List<string> tempFiles = new();
-
         private const string Url = "https://api.dictionaryapi.dev/api/v2/entries/en/{0}";
 
         public async Task<List<Result>> Query(string query)
@@ -46,15 +44,22 @@ namespace Flow.Launcher.Plugin.Dictionary
             QueryResult mainResult = queryResult[0];
 
             string phonetic = mainResult.Phonetic;
+            string audioURL = null;
+            for (int i = 0; i < mainResult.Phonetics.Length; i++)
             {
-                for (int i = 0; i < mainResult.Phonetics.Length; i++)
+                if (string.IsNullOrEmpty(phonetic) && !string.IsNullOrEmpty(mainResult.Phonetics[i].Text))
                 {
-                    if (string.IsNullOrEmpty(phonetic) && !string.IsNullOrEmpty(mainResult.Phonetics[i].Text))
-                    {
-                        phonetic = mainResult.Phonetics[i].Text;
-                        break;
-                    }
+                    phonetic = mainResult.Phonetics[i].Text;
+                }
 
+                if (string.IsNullOrEmpty(audioURL) && !string.IsNullOrEmpty(mainResult.Phonetics[i].Audio))
+                {
+                    audioURL = mainResult.Phonetics[i].Audio;
+                }
+
+                if (!string.IsNullOrEmpty(phonetic) && !string.IsNullOrEmpty(audioURL))
+                {
+                    break;
                 }
             }
 
@@ -64,13 +69,14 @@ namespace Flow.Launcher.Plugin.Dictionary
                 var result = new Result
                 {
                     Title = phonetic,
-                    SubTitle = "Phonetic",
+                    SubTitle = "Phonetic (Select to play audio)",
                     IcoPath = iconPath,
                 };
 
                 results.Add(result);
             }
 
+            _ = FetchPronunciationAudio(audioURL, results);
 
             foreach (var meaning in mainResult.Meanings)
             {
@@ -90,12 +96,33 @@ namespace Flow.Launcher.Plugin.Dictionary
             return results;
         }
 
+        private async Task FetchPronunciationAudio(string audioURL, List<Result> results)
+        {
+            if (!string.IsNullOrEmpty(audioURL))
+            {
+                byte[] audioBytes = await httpClient.GetByteArrayAsync(audioURL);
+
+                Stream audioStream = new MemoryStream(audioBytes);
+
+                var reader = new Mp3FileReader(audioStream);
+                var waveOut = new WaveOut();
+                waveOut.Init(reader);
+
+                if (results.Count > 0)
+                {
+                    results[0].Action = (c) =>
+                    {
+                        reader.Seek(0, SeekOrigin.Begin);
+                        waveOut.Play();
+
+                        return false;
+                    };
+                }
+            }
+        }
+
         public void Dispose()
         {
-            foreach (var tempFile in tempFiles)
-            {
-                File.Delete(tempFile);
-            }
             Dispose(true);
             GC.SuppressFinalize(this);
         }
