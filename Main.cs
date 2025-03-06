@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin;
 
-namespace Flow.Launcher.Plugin.Dictionary
+namespace Flow.Launcher.Plugin.FreeDictionary
 {
     public class Dictionary : IAsyncPlugin
     {

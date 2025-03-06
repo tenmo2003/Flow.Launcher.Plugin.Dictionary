@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using NAudio.Wave;
 
-namespace Flow.Launcher.Plugin.Dictionary
+namespace Flow.Launcher.Plugin.FreeDictionary
 {
     public class QueryService : IDisposable
     {

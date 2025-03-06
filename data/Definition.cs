@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Flow.Launcher.Plugin.Dictionary
+namespace Flow.Launcher.Plugin.FreeDictionary
 {
     public class Definition
     {

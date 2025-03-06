@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0-windows</TargetFramework>
-    <AssemblyName>Flow.Launcher.Plugin.Dictionary</AssemblyName>
-    <PackageId>Flow.Launcher.Plugin.Dictionary</PackageId>
+    <AssemblyName>Flow.Launcher.Plugin.FreeDictionary</AssemblyName>
+    <PackageId>Flow.Launcher.Plugin.FreeDictionary</PackageId>
     <Authors>tenmo2003</Authors>
-    <PackageProjectUrl>https://github.com/tenmo2003/Flow.Launcher.Plugin.Dictionary</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/tenmo2003/Flow.Launcher.Plugin.Dictionary</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/tenmo2003/Flow.Launcher.Plugin.FreeDictionary</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/tenmo2003/Flow.Launcher.Plugin.FreeDictionary</RepositoryUrl>
     <PackageTags>flow-launcher flow-plugin</PackageTags>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
