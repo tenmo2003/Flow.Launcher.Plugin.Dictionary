@@ -1,23 +1,33 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Plugin.Dictionary
 {
-    public class Dictionary : IPlugin
+    public class Dictionary : IAsyncPlugin
     {
         private PluginInitContext _context;
         private QueryService _queryService;
 
-        public void Init(PluginInitContext context)
+        public async Task InitAsync(PluginInitContext context)
         {
             _context = context;
             _queryService = new QueryService();
         }
 
-        public List<Result> Query(Query query)
+        public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            return _queryService.Query(query.Search).GetAwaiter().GetResult();
+            await Task.Delay(500, token);
+
+            if (token.IsCancellationRequested) {
+                await File.AppendText("flow-log.txt").WriteLineAsync($"Query: {query.Search} Cancelled");
+                return null;
+            }
+
+            return await _queryService.Query(query.Search);
         }
     }
 }
