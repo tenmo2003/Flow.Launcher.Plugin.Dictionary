@@ -20,6 +20,8 @@ namespace Flow.Launcher.Plugin.FreeDictionary
 
         private WaveOut waveOut;
 
+        private const int lengthThreshold = 60;
+
         private const string Url = "https://api.dictionaryapi.dev/api/v2/entries/en/{0}";
 
         public async Task<List<Result>> Query(string query)
@@ -91,7 +93,8 @@ namespace Flow.Launcher.Plugin.FreeDictionary
                     var result = new Result
                     {
                         Title = definition.DefinitionText,
-                        SubTitle = meaning.PartOfSpeech,
+                        SubTitle = meaning.PartOfSpeech +
+                            (definition.DefinitionText.Length > lengthThreshold ? " (Use preview (F1) to read full definition)" : string.Empty),
                         IcoPath = iconPath
                     };
 
