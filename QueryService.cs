@@ -14,6 +14,12 @@ namespace Flow.Launcher.Plugin.Dictionary
 
         private const string iconPath = "icon.png";
 
+        private Stream audioStream;
+
+        private Mp3FileReader reader;
+
+        private WaveOut waveOut;
+
         private const string Url = "https://api.dictionaryapi.dev/api/v2/entries/en/{0}";
 
         public async Task<List<Result>> Query(string query)
@@ -100,12 +106,17 @@ namespace Flow.Launcher.Plugin.Dictionary
         {
             if (!string.IsNullOrEmpty(audioURL))
             {
+                waveOut?.Stop();
+                waveOut?.Dispose();
+                await (reader?.DisposeAsync() ?? ValueTask.CompletedTask);
+                await (audioStream?.DisposeAsync() ?? ValueTask.CompletedTask);
+
                 byte[] audioBytes = await httpClient.GetByteArrayAsync(audioURL);
 
-                Stream audioStream = new MemoryStream(audioBytes);
+                audioStream = new MemoryStream(audioBytes);
 
-                var reader = new Mp3FileReader(audioStream);
-                var waveOut = new WaveOut();
+                reader = new Mp3FileReader(audioStream);
+                waveOut = new WaveOut();
                 waveOut.Init(reader);
 
                 if (results.Count > 0)
