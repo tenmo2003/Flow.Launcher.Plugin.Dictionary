@@ -1,4 +1,22 @@
-# Free Dictionary Flow Launcher Plugin  
+# Free Dictionary Flow Launcher Plugin
+
+<div>
+      <a href="https://github.com/Flow-Launcher/Flow.Launcher.PluginsManifest">
+          <img src="https://img.shields.io/badge/Flow%20Launcher-Plugin-blue" alt="Flow Launcher Plugin">
+      </a>
+      <a href="https://github.com/tenmo2003/Flow.Launcher.Plugin.FreeDictionary/issues">
+          <img src="https://img.shields.io/github/issues/tenmo2003/Flow.Launcher.Plugin.FreeDictionary" alt="GitHub issues">
+      </a>
+      <a href="https://github.com/tenmo2003/Flow.Launcher.Plugin.FreeDictionary/pulls">
+          <img src="https://img.shields.io/github/issues-pr/tenmo2003/Flow.Launcher.Plugin.FreeDictionary" alt="GitHub pull requests">
+      </a>
+      <a href="https://github.com/tenmo2003/Flow.Launcher.Plugin.FreeDictionary/commits">
+          <img src="https://img.shields.io/github/last-commit/tenmo2003/Flow.Launcher.Plugin.FreeDictionary" alt="GitHub last commit">
+      </a>
+      <a href="https://github.com/tenmo2003/Flow.Launcher.Plugin.FreeDictionary/releases">
+          <img src="https://img.shields.io/github/downloads/tenmo2003/Flow.Launcher.Plugin.FreeDictionary/total" alt="Total Downloads">
+      </a>
+</div>
 
 This **Flow Launcher** plugin integrates with the **Free Dictionary API** to fetch **word definitions** and **pronunciations** with playable audio (if available).  
 
