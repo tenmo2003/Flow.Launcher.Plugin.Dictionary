@@ -26,11 +26,6 @@ namespace Flow.Launcher.Plugin.FreeDictionary
 
         public async Task<List<Result>> Query(string query)
         {
-            if (string.IsNullOrEmpty(query))
-            {
-                return new List<Result> { new() { Title = "Enter the word you wish to conquer! ╰( ◕ ᗜ ◕ )╯", IcoPath = iconPath } };
-            }
-
             var url = string.Format(Url, query);
 
             var response = await httpClient.GetAsync(url);

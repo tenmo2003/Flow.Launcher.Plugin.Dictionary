@@ -20,7 +20,10 @@ namespace Flow.Launcher.Plugin.FreeDictionary
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            await Task.Delay(500, token);
+            if (string.IsNullOrEmpty(query.Search))
+            {
+                return new List<Result> { new() { Title = "Enter the word you wish to conquer! ╰( ◕ ᗜ ◕ )╯", IcoPath = "icon.png" } };
+            }
 
             if (token.IsCancellationRequested) {
                 await File.AppendText("flow-log.txt").WriteLineAsync($"Query: {query.Search} Cancelled");
