@@ -24,7 +24,7 @@ namespace Flow.Launcher.Plugin.FreeDictionary
 
         private const string Url = "https://api.dictionaryapi.dev/api/v2/entries/en/{0}";
 
-        public async Task<List<Result>> Query(string query)
+        public async Task<List<Result>> Query(string query, IPublicAPI publicAPI)
         {
             var url = string.Format(Url, query);
 
@@ -90,7 +90,12 @@ namespace Flow.Launcher.Plugin.FreeDictionary
                         Title = definition.DefinitionText,
                         SubTitle = meaning.PartOfSpeech +
                             (definition.DefinitionText.Length > lengthThreshold ? " (Use preview (F1) to read full definition)" : string.Empty),
-                        IcoPath = iconPath
+                        IcoPath = iconPath,
+                        Action = (c) =>
+                        {
+                            publicAPI.CopyToClipboard(definition.DefinitionText);
+                            return false;
+                        }
                     };
 
                     results.Add(result);

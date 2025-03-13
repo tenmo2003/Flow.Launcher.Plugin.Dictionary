@@ -10,10 +10,12 @@ namespace Flow.Launcher.Plugin.FreeDictionary
     public class Dictionary : IAsyncPlugin
     {
         private PluginInitContext _context;
+        private IPublicAPI _publicAPI;
         private QueryService _queryService;
 
         public async Task InitAsync(PluginInitContext context)
         {
+            _publicAPI = context.API;
             _context = context;
             _queryService = new QueryService();
         }
@@ -25,12 +27,14 @@ namespace Flow.Launcher.Plugin.FreeDictionary
                 return new List<Result> { new() { Title = "Enter the word you wish to conquer! ╰( ◕ ᗜ ◕ )╯", IcoPath = "icon.png" } };
             }
 
-            if (token.IsCancellationRequested) {
-                await File.AppendText("flow-log.txt").WriteLineAsync($"Query: {query.Search} Cancelled");
+            await Task.Delay(400, token);
+
+            if (token.IsCancellationRequested)
+            {
                 return null;
             }
 
-            return await _queryService.Query(query.Search);
+            return await _queryService.Query(query.Search, _publicAPI);
         }
     }
 }
