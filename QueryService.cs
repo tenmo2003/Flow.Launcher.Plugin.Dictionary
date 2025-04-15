@@ -72,7 +72,7 @@ namespace Flow.Launcher.Plugin.FreeDictionary
                 var result = new Result
                 {
                     Title = phonetic,
-                    SubTitle = "Phonetic (Select to play audio if available)",
+                    SubTitle = "Phonetic " + (string.IsNullOrEmpty(audioURL) ? "(No audio)" : "(Select to play audio if available)"),
                     IcoPath = iconPath,
                 };
 
